@@ -1,0 +1,91 @@
+<!-- Begin page content -->
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errorMessage">
+            {{errorMessage}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <h5>Inserisci nuovo elemento</h5>
+            </div>
+            <div class="card-body">
+                <form (ngSubmit)="save(atletaForm)" #atletaForm="ngForm" class="row g-3">
+                    <div class="col-md-6">
+                        <label for="nome">Nome <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="nome" name="nome" placeholder="Inserire il nome"
+                            required minlength="2" [(ngModel)]="atleta.nome" #nomeVar="ngModel"
+                            [ngClass]="{'is-invalid': (nomeVar.touched || nomeVar.dirty) && !nomeVar.valid }">
+                        <div class="invalid-feedback">
+                            <div *ngIf="nomeVar.errors?.['required']">
+                                Prego inserire un valore
+                            </div>
+                            <div *ngIf="nomeVar.errors?.['minlength']">
+                                Il campo deve avere almeno due caratteri.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="cognome">Cognome <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="cognome" name="cognome"
+                            placeholder="Inserire cognome" required min="10" [(ngModel)]="atleta.cognome"
+                            #cognomeVar="ngModel"
+                            [ngClass]="{'is-invalid': (cognomeVar.touched || cognomeVar.dirty) && !cognomeVar.valid }">
+                        <div class="invalid-feedback">
+                            <div *ngIf="cognomeVar.errors?.['required']">
+                                Prego inserire un valore
+                            </div>
+                            <div *ngIf="cognomeVar.errors?.['min']">
+                                Il campo deve contenere almeno il valore 10.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="medaglie">Numero Medaglie Vinte <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="medaglie" name="medaglie"
+                            placeholder="Inserire medaglie" [(ngModel)]="atleta.numeroMedaglieVinte"
+                            #medaglieVar="ngModel"
+                            [ngClass]="{'is-invalid': (medaglieVar.touched || medaglieVar.dirty) && !medaglieVar.valid }">
+                        <div class="invalid-feedback">
+                            <div *ngIf="medaglieVar.errors?.['required']">
+                                Prego inserire un valore
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="inAttivitaId" name="inAttivita"
+                                [(ngModel)]="atleta.inAttivita">
+                            <label class="form-check-label" for="inAttivitaId">{{ atleta.inAttivita ? 'Attivo' :
+                                'Non Attivo' }}</label>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3">
+                        <label for="dataUtilmaGara" class="form-label">Data Ultima Gara <span
+                                class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <input type="date" class="form-control" placeholder="dd/MM/yy" required id="dataUtilmaGara"
+                                name="dataUtilmaGara" title="formato: gg/mm/aaaa" [(ngModel)]="atleta.dataUtilmaGara"
+                                #dataUtilmaGaraVar="ngModel"
+                                [ngClass]="{'is-invalid': (dataUtilmaGaraVar.touched || dataUtilmaGaraVar.dirty) && !dataUtilmaGaraVar.valid }"
+                                [max]="getCurrentDate()">
+                            <div class="invalid-feedback">
+                                <div *ngIf="!dataUtilmaGaraVar.valid">
+                                    Il campo deve essere correttamente valorizzato
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <button type="submit" name="submit" value="submit" id="submit"
+                            class="btn btn-primary">Conferma</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
